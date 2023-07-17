@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
           'email': new FormControl(null, [Validators.required, Validators.email]),
         }),
         //FormControl --> arguments: first state, single validator, asynchronous validators
-        'gender': new FormControl('female')
+        'gender': new FormControl('female'),
+        'hobbies': new FormArray([])
       });
   }
 
@@ -25,6 +26,18 @@ export class AppComponent implements OnInit {
     console.log(this.signupForm);
   }
 
+  onAddHobby(){
+    const control = new FormControl(null, Validators.required);
+    (<FormArray>this.signupForm.get('hobbies')).push(control);
+  }
 
+  getControls(){
+    return (<FormArray>this.signupForm.get('hobbies')).controls;
+  }
+
+  //Alternative to getControls() --> without casting and in html use directly controls instead of getControls():
+  // get controls() {
+  //   return (this.signupForm.get('hobbies') as FormArray).controls;
+  // }
 
 }
