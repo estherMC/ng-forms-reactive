@@ -10,7 +10,11 @@
               id="username"
               formControlName="username"
               class="form-control">
-          <span *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched" class="help-block">Please enter a valid username!</span>
+          <!-- <span *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched" class="help-block">Please enter a valid username!</span> -->
+          <span *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched" class="help-block">
+            <span *ngIf="signupForm.get('userData.username').errors['required']" class="help-block">This field is required!</span>
+            <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']" class="help-block">This name is invalid!</span>
+          </span>
           </div>
           <!-- El de dalt també es pot indicar així -->
           <!-- [formControlName]="'username'"         -->
